@@ -1,0 +1,44 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: microservice2-app
+  labels:
+    app: microservice2
+spec:
+  containers:
+  - name: microservice2
+    image: ianmaddocks/microservice2:0.0.2
+    resources:
+      limits:
+        memory: 512Mi
+        cpu: "1"
+      requests:
+        memory: 256Mi
+        cpu: "0.2"
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: microservice2-service
+spec:
+  selector:
+    app: microservice2
+  ports:
+  # Default port used by the image
+  - port: 8000
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-microservice
+spec:
+  rules:
+  - http:
+      paths:
+      - pathType: Prefix
+        path: "/home"
+        backend:
+          service:
+            name: microservice2-service
+            port:
+              number: 8000
