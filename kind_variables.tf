@@ -3,7 +3,7 @@
 variable "kind_cluster_name" {
   type        = string
   description = "The name of the cluster."
-  default     = "ingress-Nginx_app-microservice_app-bar"
+  default     = "ingress-nginx-app-microservice-app-bar"
 }
 
 variable "kind_cluster_config_path" {
